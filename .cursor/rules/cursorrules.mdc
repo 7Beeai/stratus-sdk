@@ -1,0 +1,100 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Stratus.IA - Regras para Cursor AI
+
+## CONTEXTO DO PROJETO
+Sistema de IA especializado em aviação civil brasileira, migrando de N8N para OpenAI Agents SDK.
+
+## OBJETIVO CRÍTICO
+Reduzir tempo de resposta de 4 minutos para 2 segundos mantendo precisão absoluta.
+
+## ARQUITETURA ALVO
+- 8 agentes especializados em aviação
+- 4 MCPs servers para APIs externas
+- Sistema de handoffs entre agentes
+- Guardrails específicos para aviação
+- API FastAPI para integração N8N
+- Deploy Google Cloud Run
+
+## PADRÕES DE CÓDIGO OBRIGATÓRIOS
+- Python 3.11+ com type hints completos
+- Async/await para todas operações I/O
+- Logging estruturado com contexto
+- Tratamento robusto de erros (aviação = zero tolerância)
+- Documentação em português brasileiro
+- Testes para funções críticas de segurança
+
+## REGRAS DE SEGURANÇA AVIAÇÃO
+- NUNCA inventar informações (hallucination = risco de vida)
+- SEMPRE validar códigos ICAO antes de usar
+- SEMPRE verificar conformidade com RBACs
+- SEMPRE aplicar guardrails antes de responder
+- SEMPRE logar decisões críticas
+
+## PERFORMANCE OBRIGATÓRIA
+- Resposta < 2 segundos (SLA crítico)
+- Cache inteligente com TTL apropriado
+- Circuit breakers para resiliência
+- Retry logic com backoff exponencial
+- Processamento paralelo quando possível
+
+## ESTRUTURA DE ARQUIVOS
+src/
+├── agents/          # 8 agentes especializados
+├── mcp_servers/     # 4 MCPs servers
+├── guardrails/      # Sistema de proteção
+├── utils/           # WebSearch e utilitários
+└── stratus_main.py  # Sistema principal
+api/
+└── main.py          # FastAPI para N8N
+config/
+└── settings.py      # Configurações centralizadas
+
+
+## NOMENCLATURA
+- Classes: PascalCase (WeatherAgent, RedemptMCPServer)
+- Funções: snake_case (process_message, validate_icao_code)
+- Constantes: UPPER_SNAKE_CASE (MAX_RETRY_ATTEMPTS)
+- Arquivos: snake_case (weather_agent.py, redemet_server.py)
+
+## IMPORTS E DEPENDÊNCIAS
+- Use imports absolutos: from src.agents.weather import WeatherAgent
+- Agrupe imports: stdlib, third-party, local
+- Use type hints: from typing import Dict, List, Optional, Any
+
+## TRATAMENTO DE ERROS
+- Use try/except específicos, não genéricos
+- Log todos os erros com contexto
+- Implemente fallbacks para operações críticas
+- Use custom exceptions para domínio específico
+
+## TESTES
+- Teste todas as funções críticas de segurança
+- Use pytest com fixtures async
+- Mock APIs externas nos testes
+- Teste cenários de falha (circuit breakers)
+
+## DOCUMENTAÇÃO
+- Docstrings em português para todas as funções
+- Comentários explicativos para lógica complexa
+- README.md com instruções de setup
+- Exemplos de uso para cada agente
+
+## INTEGRAÇÃO N8N
+- Endpoints REST simples e claros
+- Formato de resposta consistente
+- Health checks para monitoramento
+- Documentação OpenAPI automática
+
+## DEPLOY GOOGLE CLOUD
+- Dockerfile otimizado para Cloud Run
+- Variáveis de ambiente para configuração
+- Scripts de deploy automatizados
+- Monitoramento e alertas configurados
+
+LEMBRE-SE: Este é um sistema crítico para aviação. Precisão e confiabilidade são mais importantes que velocidade de desenvolvimento.
+
+

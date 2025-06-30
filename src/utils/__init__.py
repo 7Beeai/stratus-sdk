@@ -1,0 +1,1 @@
+# Módulo de utilitários e ferramentas auxiliares 
